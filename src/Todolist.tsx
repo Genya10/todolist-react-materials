@@ -9,6 +9,7 @@ isDone:boolean
 type PropsType={
     title:string,
     tasks:Array<TaskType>,
+    deleteTask:()=> void
 }
 
 export const Todolist = (props:PropsType) => {
@@ -22,6 +23,7 @@ export const Todolist = (props:PropsType) => {
       props.tasks.map((task)=>{
       return     <div key={task.id}> <input type="checkbox" checked={task.isDone}/>
         <span>{task.title}</span>
+        <button onClick={()=>{alert(task.title)}}>X</button>
         </div>
       })
       }

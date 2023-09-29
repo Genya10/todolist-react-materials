@@ -15,22 +15,22 @@ export const Todolist = (props:PropsType) => {
 
   return (
     <div>
-
       <h2>{props.title}</h2>
       <input type="text" />
       <button>+</button>
+      {
+      props.tasks.map((task)=>{
+      return     <div key={task.id}> <input type="checkbox" checked={task.isDone}/>
+        <span>{task.title}</span>
+        </div>
+      })
+      }
       <div>
-       <div><input type="checkbox" checked={true} />
-        <span>html</span></div> 
-
-      </div>
-      <div>
-        <button>
-                 All
-        </button>
+        <button> All</button>       
         <button >Active</button>
         <button >Completed</button>
       </div>
+
     </div>
   );
 };

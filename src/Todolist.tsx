@@ -12,7 +12,6 @@ type PropsType={
     tasks:Array<TaskType>,
     removeTask:(id:number)=> void,
     changeFilter:(value:FilterType)=>void
-
 }
 
 export const Todolist = (props:PropsType) => {

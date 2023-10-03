@@ -13,7 +13,9 @@ type PropsType={
     tasks:Array<TaskType>,
     addTask:(value:string)=>void,
     removeTask:(id:string)=> void,
-    changeFilter:(value:FilterType)=>void
+    changeFilter:(value:FilterType)=>void,
+    checkTask:(taskId:string,isDone:boolean)=>void,
+   
 }
 
 export const Todolist = (props:PropsType) => {
@@ -26,13 +28,12 @@ export const Todolist = (props:PropsType) => {
   }
   const inputOnChange=(e:ChangeEvent<HTMLInputElement>)=>{setTaskTitle(e.currentTarget.value)};
   const inputOnKeyDown=(e:KeyboardEvent<HTMLInputElement>)=>{
-    if(e.key === "Enter"){
-      setAddTask();
-      }
-  }
+    if(e.key === "Enter"){setAddTask();}}  
+  
   const btnAll=()=>props.changeFilter('all');
   const btnActive=()=>props.changeFilter('active');
   const btnCompleted=()=>props.changeFilter('completed');
+  
 
   return (
     <div>
@@ -43,20 +44,25 @@ export const Todolist = (props:PropsType) => {
         onKeyDown={inputOnKeyDown}
       />
       <button onClick={setAddTask}>+</button>
+    {/*props.tasks.map */}
       {props.tasks.map((task) => {
         const btnRemoveTask = () => {
-          props.removeTask(task.id);
-        };
-
+          props.removeTask(task.id)};
+          const onCheckTask=(e:ChangeEvent<HTMLInputElement>)=>{
+            props.checkTask(task.id , e.currentTarget.checked)
+          }
+          
         return (
           <div key={task.id}>
             {" "}
-            <input type="checkbox" checked={task.isDone} />
+            <input type="checkbox" checked={task.isDone}
+                   onChange={onCheckTask} />
             <span>{task.title}</span>
             <button onClick={btnRemoveTask}>X</button>
           </div>
         );
       })}
+
       <div>
         <button onClick={btnAll}>All</button>
         <button onClick={btnActive}>Active</button>

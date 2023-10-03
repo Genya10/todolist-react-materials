@@ -13,7 +13,6 @@ function App() {
     { id: v1(), title: "Typescript", isDone: true },
     { id: v1(), title: "Javascript", isDone: true },
   ]);
-  console.log(tasks)
 
   let [filter, setFilter] = useState<FilterType>("all");
 
@@ -37,6 +36,15 @@ function App() {
     console.log(tasks);
   };
 
+  const checkTask=(taskId:string,isDone:boolean)=>{
+   let task = tasks.find((t)=> t.id === taskId);
+   if(task){
+    task.isDone=isDone;
+   }
+
+   setTasks([...tasks]);
+  }  
+
   const changeFilter = (value: FilterType) => {
     setFilter(value);
   };
@@ -49,6 +57,7 @@ function App() {
         addTask={addTask}
         removeTask={removeTask}
         changeFilter={changeFilter}
+        checkTask={checkTask}
       />
     </div>
   );

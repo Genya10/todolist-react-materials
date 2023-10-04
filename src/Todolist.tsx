@@ -13,9 +13,10 @@ type PropsType={
     tasks:Array<TaskType>,
     addTask:(value:string)=>void,
     removeTask:(id:string)=> void,
-    changeFilter:(value:FilterType)=>void,
+    changeFilter:(value:FilterType,todoId:string)=>void,
     checkTask:(taskId:string,isDone:boolean)=>void,
     filter:FilterType ,
+    id:string
 }
 
 export const Todolist = (props:PropsType) => {
@@ -37,10 +38,10 @@ export const Todolist = (props:PropsType) => {
     if(e.key === "Enter"){setAddTask()}
   } 
   
-  const btnAll=()=>{props.changeFilter('all') };   
-  const btnActive=()=>props.changeFilter('active');
-  const btnCompleted=()=>props.changeFilter('completed');
-  
+  const btnAll=()=>{props.changeFilter('all',props.id) };   
+  const btnActive=()=>props.changeFilter('active',props.id);
+  const btnCompleted=()=>props.changeFilter('completed',props.id);
+   
   return (
     <div>
       <h2>{props.title}</h2>
@@ -63,7 +64,8 @@ export const Todolist = (props:PropsType) => {
         };
 
         return (
-          <div key={task.id}>
+          <div key={task.id}
+          className={task.isDone === true ? "pale":""}>
             {" "}
             <input
               type="checkbox"
@@ -75,7 +77,7 @@ export const Todolist = (props:PropsType) => {
           </div>
         );
       })}
-
+       
       <div>
         <button onClick={btnAll}          
           className={props.filter === "all" ? "choosed" : ""}> All </button>                      
@@ -83,8 +85,7 @@ export const Todolist = (props:PropsType) => {
          }
           className={props.filter === "active" ? "choosed" : ""}>Active</button>               
         <button onClick={btnCompleted}         
-          className={props.filter === "completed" ? "choosed" : ""}> Completed</button>                 
-        
+          className={props.filter === "completed" ? "choosed" : ""}>Completed</button>                         
       </div>
     </div>
   );

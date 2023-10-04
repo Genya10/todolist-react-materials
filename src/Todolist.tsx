@@ -14,36 +14,44 @@ type PropsType={
     addTask:(value:string)=>void,
     removeTask:(id:string)=> void,
     changeFilter:(value:FilterType)=>void,
-    checkTask:(taskId:string,isDone:boolean)=>void,
-   
+    checkTask:(taskId:string,isDone:boolean)=>void,  
 }
 
 export const Todolist = (props:PropsType) => {
 
-  let [newTaskTitle,setTaskTitle]=useState('');
+  let [newTaskTitle,setTaskTitle] = useState('');
+  let [error,setError] = useState('');
 
   const setAddTask=()=>{
-    props.addTask(newTaskTitle);
-    setTaskTitle('');
+    if(newTaskTitle.trim()!==''){
+      props.addTask(newTaskTitle);setTaskTitle('');
+    }else{
+      setError('Field is required');
+    }
   }
-  const inputOnChange=(e:ChangeEvent<HTMLInputElement>)=>{setTaskTitle(e.currentTarget.value)};
+     
+  const inputOnChange=(e:ChangeEvent<HTMLInputElement>)=>{setTaskTitle(e.currentTarget.value);
+   setError('')};
   const inputOnKeyDown=(e:KeyboardEvent<HTMLInputElement>)=>{
-    if(e.key === "Enter"){setAddTask();}}  
+    if(e.key === "Enter"){setAddTask()}
+  } 
   
   const btnAll=()=>props.changeFilter('all');
   const btnActive=()=>props.changeFilter('active');
   const btnCompleted=()=>props.changeFilter('completed');
   
-
   return (
     <div>
       <h2>{props.title}</h2>
-      <input
+      <input 
         value={newTaskTitle}
         onChange={inputOnChange}
         onKeyDown={inputOnKeyDown}
+        className={error ? "error" : ""}
       />
       <button onClick={setAddTask}>+</button>
+       {error && <div className="error-write">{error}</div> }
+        
     {/*props.tasks.map */}
       {props.tasks.map((task) => {
         const btnRemoveTask = () => {

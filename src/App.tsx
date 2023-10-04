@@ -39,9 +39,8 @@ function App() {
   const checkTask=(taskId:string,isDone:boolean)=>{
    let task = tasks.find((t)=> t.id === taskId);
    if(task){
-    task.isDone=isDone;
+    task.isDone = isDone;
    }
-
    setTasks([...tasks]);
   }  
 

@@ -13,40 +13,29 @@ type TodolistType={
 }
 
 function App() {
-  let [tasks, setTasks] = useState<Array<TaskType>>([
-    { id: v1(), title: "React", isDone: true },
-    { id: v1(), title: "Redux", isDone: false },
-    { id: v1(), title: "Typescript", isDone: true },
-    { id: v1(), title: "Javascript", isDone: true },
-  ]);
-  let [movies, setMovies] = useState<Array<TaskType>>([
-    { id: v1(), title: "Crossfit", isDone: false },
-    { id: v1(), title: "Terminatir", isDone: false },
-    { id: v1(), title: "Go-go", isDone: true },
-  ]);
-  let [books, setBooks] = useState<Array<TaskType>>([
-    { id: v1(), title: "Crossfit", isDone: false },
-    { id: v1(), title: "Terminatir", isDone: true},
-    { id: v1(), title: "Go-go", isDone: true },
-  ]);
 
-
-  const addTask=(value:string)=>{
+  const addTask=(value:string,todoId:string)=>{
     let newTask={id:v1(),title:value,isDone:false};
-    let newTasks=[...tasks,newTask];
-    setTasks(newTasks);   
+    let tasksArray= tasks[todoId];
+    let newTasks=[...tasksArray,newTask];
+    tasks[todoId]=newTasks;
+    setTasks({...tasks});   
   }
-  const removeTask = (id: string) => {
-    tasks = tasks.filter((t) => t.id !== id);
-    setTasks(tasks);
+  const removeTask = (id: string,todoId:string) => {
+    let tasksArray=tasks[todoId];
+    let filteredTasksArray = tasksArray.filter((t) => t.id !== id);
+    tasks[todoId] = filteredTasksArray;
+    setTasks({...tasks});
     console.log(tasks);
   };
-  const checkTask=(taskId:string,isDone:boolean)=>{
-   let task = tasks.find((t)=> t.id === taskId);
+  const checkTask=(taskId:string,isDone:boolean,todoId:string)=>{
+    let tasksArray=tasks[todoId];
+    let task = tasksArray.find((t)=> t.id === taskId);
+   
    if(task){
     task.isDone = isDone;
    }
-   setTasks([...tasks]);
+   setTasks({...tasks});
   }  
   const changeFilter = (value: FilterType,todoId:string) => {
     let todolist= todoLists.find((tl)=>tl.id === todoId)
@@ -56,21 +45,53 @@ function App() {
     }
   };
 
+  const todolist1=v1();
+  const todolist2=v1();
+  const todolist3=v1();
+
   let [todoLists,setTodoLists] = useState <Array<TodolistType>>([
-    {id:v1(),title:"Frontend",filter:"all",},
-    {id:v1(),title:"Movies",filter:"active",},
-    {id:v1(),title:"Books",filter:"completed",},
+    {id:todolist1,title:"Frontend",filter:"all",},
+    {id:todolist2,title:"Movies",filter:"all",},
+    {id:todolist3,title:"Books",filter:"all",},
    ]);
+
+  let [tasks,setTasks] = useState({
+    [todolist1]:[
+      { id: v1(), title: "React", isDone: true },
+      { id: v1(), title: "Redux", isDone: false },
+      { id: v1(), title: "Typescript", isDone: true },
+      { id: v1(), title: "Javascript", isDone: true },
+    ],
+    [todolist2]:[
+      { id: v1(), title: "Crossfit", isDone: false },
+      { id: v1(), title: "Terminatir", isDone: false },
+      { id: v1(), title: "Go-go", isDone: true },
+    ],
+    [todolist3]:[
+      { id: v1(), title: "The ring", isDone: false },
+      { id: v1(), title: "Angels", isDone: true},
+      { id: v1(), title: "Focus", isDone: true },
+    ]
+  })
+
+  const removeTodolist=(todoId:string)=>{
+    let todolistFilter=todoLists.filter((tl)=> {
+     return tl.id !== todoId })     
+      setTodoLists(todolistFilter);
+      delete tasks[todoId];
+      setTasks({...tasks}); 
+  }
+
   return (
     <div className="App">
       {todoLists.map((tl) => {
        
-      let filterForTask = tasks;
+      let filterForTask = tasks[tl.id];
       if (tl.filter === "completed") {
-        filterForTask = tasks.filter((t) => t.isDone === true);
+        filterForTask = filterForTask.filter((t) => t.isDone === true);
       }
       if (tl.filter === "active") {
-        filterForTask = tasks.filter((t) => t.isDone === false);
+        filterForTask = filterForTask.filter((t) => t.isDone === false);
       }
 
         return (
@@ -84,6 +105,7 @@ function App() {
             changeFilter={changeFilter}
             checkTask={checkTask}
             filter={tl.filter}
+            removeTodolist={removeTodolist}
           />
         );
       })}

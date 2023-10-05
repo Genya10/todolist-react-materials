@@ -11,12 +11,13 @@ export type TaskType = {
 type PropsType={
     title:string,
     tasks:Array<TaskType>,
-    addTask:(value:string)=>void,
-    removeTask:(id:string)=> void,
+    addTask:(value:string,todoId:string)=>void,
+    removeTask:(id:string,todoId:string)=> void,
     changeFilter:(value:FilterType,todoId:string)=>void,
-    checkTask:(taskId:string,isDone:boolean)=>void,
+    checkTask:(taskId:string,isDone:boolean,todoId:string)=>void,
     filter:FilterType ,
-    id:string
+    id:string,
+    removeTodolist:(gRtDoiT:string)=>void
 }
 
 export const Todolist = (props:PropsType) => {
@@ -26,7 +27,8 @@ export const Todolist = (props:PropsType) => {
 
   const setAddTask=()=>{
     if(newTaskTitle.trim()!==''){
-      props.addTask(newTaskTitle);setTaskTitle('');
+      props.addTask(newTaskTitle,props.id);
+      setTaskTitle('');
     }else{
       setError('Field is required');
     }
@@ -41,10 +43,12 @@ export const Todolist = (props:PropsType) => {
   const btnAll=()=>{props.changeFilter('all',props.id) };   
   const btnActive=()=>props.changeFilter('active',props.id);
   const btnCompleted=()=>props.changeFilter('completed',props.id);
+  const removeTodo=()=>{props.removeTodolist(props.id)}
    
   return (
     <div>
-      <h2>{props.title}</h2>
+      <h2>{props.title}<button onClick={removeTodo}
+      >Remove</button></h2>      
       <input
         value={newTaskTitle}
         onChange={inputOnChange}
@@ -57,10 +61,10 @@ export const Todolist = (props:PropsType) => {
       {/*props.tasks.map */}
       {props.tasks.map((task) => {
         const btnRemoveTask = () => {
-          props.removeTask(task.id);
+          props.removeTask(task.id,props.id);
         };
         const onCheckTask = (e: ChangeEvent<HTMLInputElement>) => {
-          props.checkTask(task.id, e.currentTarget.checked);
+          props.checkTask(task.id,e.currentTarget.checked,props.id);
         };
 
         return (
@@ -87,6 +91,7 @@ export const Todolist = (props:PropsType) => {
         <button onClick={btnCompleted}         
           className={props.filter === "completed" ? "choosed" : ""}>Completed</button>                         
       </div>
+      
     </div>
   );
 };

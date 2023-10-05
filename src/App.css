@@ -18,3 +18,7 @@
 .pale{
     opacity: 0.5;
 }
+.btn-span{
+    display: inline-block;
+    padding: 3px;
+}

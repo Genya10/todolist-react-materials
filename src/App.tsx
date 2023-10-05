@@ -3,6 +3,7 @@ import "./App.css";
 import { Todolist } from "./Todolist";
 import { AddTaskInput } from "./AddTaskInput";
 import { v1 } from "uuid";
+import { TaskType } from "./Todolist";
 
 export type FilterType = "all" | "active" | "completed";
 
@@ -10,6 +11,9 @@ type TodolistType={
   id:string,
   title:string,
   filter:FilterType,
+}
+type TypeTasks={
+ [key:string]:Array<TaskType>
 }
 
 function App() {
@@ -55,7 +59,7 @@ function App() {
     {id:todolist3,title:"Books",filter:"all",},
    ]);
 
-  let [tasks,setTasks] = useState({
+  let [tasks,setTasks] = useState<TypeTasks>({
     [todolist1]:[
       { id: v1(), title: "React", isDone: true },
       { id: v1(), title: "Redux", isDone: false },
@@ -85,8 +89,7 @@ function App() {
     setTodoLists([newTodoList,...todoLists]);
     setTasks({
       ...tasks,
-      [newTodoList.id]:[{ id: v1(), title: "Mozilla", isDone: true },
-      { id: v1(), title: "Chrome", isDone: false },]})
+      [newTodoList.id]:[]})     
   }
 
   return (

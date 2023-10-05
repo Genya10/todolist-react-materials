@@ -2,6 +2,7 @@ import  { useState } from "react";
 import { FilterType } from "./App";
 import { ChangeEvent,KeyboardEvent  } from "react";
 import { AddTaskInput } from "./AddTaskInput";
+import { EditSpan } from "./Edit";
 
 export type TaskType = {
   id: string;
@@ -22,7 +23,10 @@ export type TaskType = {
 }
 
 export const Todolist = (props:PropsType) => {
- 
+  
+  const [edit,setEdit]=useState(true);
+  const changeEdit=()=>{
+    setEdit(false)};
   const btnAll=()=>{props.changeFilter('all',props.id) };   
   const btnActive=()=>props.changeFilter('active',props.id);
   const btnCompleted=()=>props.changeFilter('completed',props.id);
@@ -30,7 +34,7 @@ export const Todolist = (props:PropsType) => {
   const addTaskTodo=(value:string)=>{
     props.addTask(value,props.id);
   }
-   
+
   return (
     <div>
       <h2>{props.title}<button onClick={removeTodo}
@@ -54,9 +58,10 @@ export const Todolist = (props:PropsType) => {
               type="checkbox"
               checked={task.isDone}
               onChange={onCheckTask}
-            />
-            <span>{task.title}</span>
-            <button onClick={btnRemoveTask}>X</button>
+            />        
+            <EditSpan  title={task.title}
+           />           
+            <button  onClick={btnRemoveTask}>X</button>
           </div>
         );
       })}
@@ -74,39 +79,3 @@ export const Todolist = (props:PropsType) => {
     </div>
   );
 };
-
-/*type PropsTypeInput={
-  addTask:(value:string,todoId:string)=>void,
-  id:string,
-}
-const AddTaskInput =(props:PropsTypeInput)=>{
-  let [newTaskTitle,setTaskTitle] = useState('');
-  let [error,setError] = useState('');
-
-  const setAddTask=()=>{
-    if(newTaskTitle.trim()!==''){
-      props.addTask(newTaskTitle,props.id);
-      setTaskTitle('');
-    }else{
-      setError('Field is required');
-    }
-  }  
-  const inputOnChange=(e:ChangeEvent<HTMLInputElement>)=>{setTaskTitle(e.currentTarget.value);
-   setError('')};
-  const inputOnKeyDown=(e:KeyboardEvent<HTMLInputElement>)=>{
-    if(e.key === "Enter"){setAddTask()}
-  } 
-
-  return(
-    <div>  
-      <input
-        value={newTaskTitle}
-        onChange={inputOnChange}
-        onKeyDown={inputOnKeyDown}
-        className={error ? "error" : ""}
-      />
-      <button onClick={setAddTask}>+</button>
-      {error && <div className="error-write">{error}</div>}
-    </div>
-  )
-}*/

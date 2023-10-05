@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { Todolist } from "./Todolist";
-import { TaskType } from "./Todolist";
+import { AddTaskInput } from "./AddTaskInput";
 import { v1 } from "uuid";
 
 export type FilterType = "all" | "active" | "completed";
@@ -73,7 +73,6 @@ function App() {
       { id: v1(), title: "Focus", isDone: true },
     ]
   })
-
   const removeTodolist=(todoId:string)=>{
     let todolistFilter=todoLists.filter((tl)=> {
      return tl.id !== todoId })     
@@ -81,9 +80,21 @@ function App() {
       delete tasks[todoId];
       setTasks({...tasks}); 
   }
+  const addTodolist=(value:string)=>{
+    let newTodoList:TodolistType={id:v1(),title:value,filter:'all'};
+    setTodoLists([newTodoList,...todoLists]);
+    setTasks({
+      ...tasks,
+      [newTodoList.id]:[{ id: v1(), title: "Mozilla", isDone: true },
+      { id: v1(), title: "Chrome", isDone: false },]})
+  }
 
   return (
     <div className="App">
+
+  <AddTaskInput 
+    addItem={addTodolist}/>
+
       {todoLists.map((tl) => {
        
       let filterForTask = tasks[tl.id];

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChangeEvent,KeyboardEvent } from "react";
+import { Button } from "@mui/material";
 
 type PropsTypeInput={
     addItem:(value:string)=>void,
@@ -31,7 +32,8 @@ type PropsTypeInput={
           onKeyDown={inputOnKeyDown}
           className={error ? "error" : ""}
         />
-        <button onClick={setAddTask}>+</button>
+        <Button variant="contained" size="small"
+         onClick={setAddTask}>+</Button>
         {error && <div className="error-write">{error}</div>}
       </div>
     )

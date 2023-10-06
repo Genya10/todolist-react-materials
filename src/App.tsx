@@ -137,7 +137,7 @@ function App() {
             changeSpanTitle={changeSpanTitle}
             changeMainTitle={changeMainTitle}
           />
-        );
+        );        
       })}
     </div>
   );

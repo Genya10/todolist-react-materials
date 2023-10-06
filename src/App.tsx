@@ -34,8 +34,7 @@ function App() {
   };
   const checkTask=(taskId:string,isDone:boolean,todoId:string)=>{
     let tasksArray=tasks[todoId];
-    let task = tasksArray.find((t)=> t.id === taskId);
-   
+    let task = tasksArray.find((t)=> t.id === taskId);   
    if(task){
     task.isDone = isDone;
    }
@@ -91,7 +90,22 @@ function App() {
       ...tasks,
       [newTodoList.id]:[]})     
   }
-
+  const changeSpanTitle=(taskId:string,newValue:string,todoId:string)=>{
+        let tasksArray=tasks[todoId];
+        let task = tasksArray.find((t)=>t.id === taskId);
+     if(task){
+       task.title= newValue;
+  }
+  setTasks({...tasks});
+  }
+  const changeMainTitle=(newValue:string,todoId:string)=>{
+     let todolist = todoLists.find((tl)=>tl.id === todoId);
+     if(todolist){
+      todolist.title=newValue;
+     }     
+     setTodoLists([...todoLists]);
+  }
+  
   return (
     <div className="App">
 
@@ -120,6 +134,8 @@ function App() {
             checkTask={checkTask}
             filter={tl.filter}
             removeTodolist={removeTodolist}
+            changeSpanTitle={changeSpanTitle}
+            changeMainTitle={changeMainTitle}
           />
         );
       })}

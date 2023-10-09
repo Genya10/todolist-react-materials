@@ -1,4 +1,4 @@
-import  { useState,useEffect } from "react";
+
 import { FilterType } from "./App";
 import { ChangeEvent,KeyboardEvent  } from "react";
 import { AddTaskInput } from "./AddTaskInput";
@@ -6,6 +6,7 @@ import { EditMode } from "./Edit";
 import { IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import Button from "@mui/material/Button";
+import {Checkbox} from "@mui/material";
 
 export type TaskType = {
   id: string;
@@ -66,8 +67,7 @@ export const Todolist = (props:PropsType) => {
         return (
           <div key={task.id} className={task.isDone === true ? "pale" : ""}>
             {" "}
-            <input
-              type="checkbox"
+            <Checkbox 
               checked={task.isDone}
               onChange={onCheckTask}
             />
@@ -93,7 +93,6 @@ export const Todolist = (props:PropsType) => {
         </Button>
         <Button variant={props.filter==="completed" ? "contained": "text"}
           onClick={btnCompleted}
-          className={props.filter === "completed" ? "choosed" : ""}
         >
           Completed
         </Button>

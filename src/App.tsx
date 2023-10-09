@@ -4,6 +4,11 @@ import { Todolist } from "./Todolist";
 import { AddTaskInput } from "./AddTaskInput";
 import { v1 } from "uuid";
 import { TaskType } from "./Todolist";
+import { AppBar,Toolbar,IconButton,Typography } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from "@mui/material/Container";
+import Grid from '@mui/material/Grid';
+import Paper from "@mui/material/Paper";
 
 export type FilterType = "all" | "active" | "completed";
 
@@ -108,37 +113,60 @@ function App() {
   
   return (
     <div className="App">
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 6 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h5" color="inherit" component="div">
+            Todolists
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Container fixed>
+        <Grid container>
+          <Paper elevation={3} style={{margin:'15px',padding:'10px'}}>
+            <AddTaskInput addItem={addTodolist} />
+          </Paper>
+        </Grid>
+        <Grid container spacing={5}>
+          {todoLists.map((tl) => {
+            let filterForTask = tasks[tl.id];
+            if (tl.filter === "completed") {
+              filterForTask = filterForTask.filter((t) => t.isDone === true);
+            }
+            if (tl.filter === "active") {
+              filterForTask = filterForTask.filter((t) => t.isDone === false);
+            }
 
-  <AddTaskInput 
-    addItem={addTodolist}/>
-
-      {todoLists.map((tl) => {
-       
-      let filterForTask = tasks[tl.id];
-      if (tl.filter === "completed") {
-        filterForTask = filterForTask.filter((t) => t.isDone === true);
-      }
-      if (tl.filter === "active") {
-        filterForTask = filterForTask.filter((t) => t.isDone === false);
-      }
-
-        return (
-          <Todolist
-            key={tl.id}
-            id={tl.id}
-            title={tl.title}
-            tasks={filterForTask}
-            addTask={addTask}          
-            removeTask={removeTask}
-            changeFilter={changeFilter}
-            checkTask={checkTask}
-            filter={tl.filter}
-            removeTodolist={removeTodolist}
-            changeSpanTitle={changeSpanTitle}
-            changeMainTitle={changeMainTitle}
-          />
-        );        
-      })}
+            return (
+              <Grid item>
+                <Paper style={{ padding: "10px" }}>
+                  <Todolist
+                    key={tl.id}
+                    id={tl.id}
+                    title={tl.title}
+                    tasks={filterForTask}
+                    addTask={addTask}
+                    removeTask={removeTask}
+                    changeFilter={changeFilter}
+                    checkTask={checkTask}
+                    filter={tl.filter}
+                    removeTodolist={removeTodolist}
+                    changeSpanTitle={changeSpanTitle}
+                    changeMainTitle={changeMainTitle}
+                  />
+                </Paper>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Container>
     </div>
   );
 }

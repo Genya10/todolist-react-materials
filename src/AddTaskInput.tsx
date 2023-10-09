@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ChangeEvent,KeyboardEvent } from "react";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
+import {TextField} from "@mui/material";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 type PropsTypeInput={
     addItem:(value:string)=>void,
@@ -26,15 +28,18 @@ type PropsTypeInput={
   
     return(
       <div>  
-        <input
+        <TextField variant={"standard"}
+          label={"enter value"}
           value={newTaskTitle}
           onChange={inputOnChange}
           onKeyDown={inputOnKeyDown}
-          className={error ? "error" : ""}
+          error={!!error}        
+          helperText={error}  
         />
-        <Button variant="contained" size="small"
-         onClick={setAddTask}>+</Button>
-        {error && <div className="error-write">{error}</div>}
+        <IconButton 
+         onClick={setAddTask}>
+          < AddCircleIcon />
+         </IconButton>
       </div>
     )
   }

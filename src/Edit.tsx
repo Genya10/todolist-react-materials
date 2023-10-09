@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChangeEvent } from "react";
 
 type PropsTypeEdit={
     title:string,    
     changeValue:(newValue:string)=>void,
 }
-
 
 export const EditMode=(props:PropsTypeEdit)=>{
 
@@ -17,14 +16,14 @@ export const EditMode=(props:PropsTypeEdit)=>{
       setValue(props.title);
     };
     const changeOnTrue = () => {
-        setEdit(true);
-         props.changeValue(value);
-        };
+      setEdit(true);
+      props.changeValue(value);
+    };
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
       setValue(e.currentTarget.value);
                 
     return (
-      <div className="btn-span">
+      <span >
         {edit ? (
           <span onDoubleClick={changeOnFalse}>{props.title}</span>
         ) : (
@@ -37,6 +36,6 @@ export const EditMode=(props:PropsTypeEdit)=>{
           />
         )}
         
-      </div>
+      </span>
     );
 }

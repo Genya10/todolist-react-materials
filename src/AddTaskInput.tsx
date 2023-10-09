@@ -28,7 +28,8 @@ type PropsTypeInput={
   
     return(
       <div>  
-        <TextField variant={"standard"}
+        <TextField style={{marginBottom:'10px'}}
+          variant={"standard"}
           label={"enter value"}
           value={newTaskTitle}
           onChange={inputOnChange}
@@ -36,9 +37,9 @@ type PropsTypeInput={
           error={!!error}        
           helperText={error}  
         />
-        <IconButton 
-         onClick={setAddTask}>
-          < AddCircleIcon />
+        <IconButton color={'success'}
+                    onClick={setAddTask}>
+            <AddCircleIcon />
          </IconButton>
       </div>
     )

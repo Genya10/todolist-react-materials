@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import "./App.css";
+import  { useState } from "react";
 import { Todolist } from "./Todolist";
 import { AddTaskInput } from "./AddTaskInput";
 import { v1 } from "uuid";
@@ -58,27 +57,26 @@ function App() {
   const todolist3=v1();
 
   let [todoLists,setTodoLists] = useState <Array<TodolistType>>([
-    {id:todolist1,title:"Frontend",filter:"all",},
-    {id:todolist2,title:"Movies",filter:"all",},
-    {id:todolist3,title:"Books",filter:"all",},
+    {id:todolist1,title:"Chores",filter:"all",},
+    {id:todolist2,title:"Purchases",filter:"all",},
+    {id:todolist3,title:"Study",filter:"all",},
    ]);
 
   let [tasks,setTasks] = useState<TypeTasks>({
     [todolist1]:[
-      { id: v1(), title: "React", isDone: true },
-      { id: v1(), title: "Redux", isDone: false },
-      { id: v1(), title: "Typescript", isDone: true },
-      { id: v1(), title: "Javascript", isDone: true },
+      { id: v1(), title: "Vacuum", isDone: true },
+      { id: v1(), title: "Cook", isDone: false },
+      { id: v1(), title: "Vacuum", isDone: true },
     ],
     [todolist2]:[
-      { id: v1(), title: "Crossfit", isDone: false },
-      { id: v1(), title: "Terminatir", isDone: false },
-      { id: v1(), title: "Go-go", isDone: true },
+      { id: v1(), title: "Meat", isDone: false },
+      { id: v1(), title: "Bread", isDone: false },
+      { id: v1(), title: "Cupcake", isDone: true },
     ],
     [todolist3]:[
-      { id: v1(), title: "The ring", isDone: false },
-      { id: v1(), title: "Angels", isDone: true},
-      { id: v1(), title: "Focus", isDone: true },
+      { id: v1(), title: "English", isDone: false },
+      { id: v1(), title: "React", isDone: true},
+      { id: v1(), title: "Typescript", isDone: true },
     ]
   })
   const removeTodolist=(todoId:string)=>{
@@ -113,28 +111,28 @@ function App() {
   
   return (
     <div className="App">
-      <AppBar position="static">
-        <Toolbar variant="dense">
+      <AppBar position={'sticky'}>
+        <Toolbar variant={'regular'}>
           <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 6 }}
+            edge={'start'}
+            color={'inherit'}            
+            sx={{mr:3}}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h5" color="inherit" component="div">
-            Todolists
+            Todolist on the day
           </Typography>
         </Toolbar>
       </AppBar>
       <Container fixed>
         <Grid container>
-          <Paper elevation={3} style={{margin:'15px',padding:'10px'}}>
+          <Paper elevation={6} variant={'outlined'}
+          style={{margin:'15px',padding:'10px'}}>
             <AddTaskInput addItem={addTodolist} />
           </Paper>
         </Grid>
-        <Grid container spacing={5}>
+        <Grid container spacing={3}>
           {todoLists.map((tl) => {
             let filterForTask = tasks[tl.id];
             if (tl.filter === "completed") {
@@ -146,7 +144,7 @@ function App() {
 
             return (
               <Grid item>
-                <Paper style={{ padding: "10px" }}>
+                <Paper style={{ padding: '10px' }}>
                   <Todolist
                     key={tl.id}
                     id={tl.id}

@@ -43,12 +43,9 @@ export const Todolist = (props:PropsType) => {
 
   return (
     <div>
-      <h2>
-        <EditMode title={props.title} changeValue={changeTitle} />
-        <Button onClick={removeTodo} 
-        variant="outlined" startIcon={<Delete />}>
-          Remove
-        </Button>
+      <h2 style={{textAlign:'center'}}>
+        <EditMode title={props.title} 
+                  changeValue={changeTitle} />
       </h2>
       <AddTaskInput addItem={addTaskTodo} />
 
@@ -65,13 +62,11 @@ export const Todolist = (props:PropsType) => {
         };
 
         return (
-          <div key={task.id} className={task.isDone === true ? "pale" : ""}>
-            {" "}
-            <Checkbox 
-              checked={task.isDone}
-              onChange={onCheckTask}
-            />
-            <EditMode changeValue={changeSpan} title={task.title} />
+          <div key={task.id}>
+            <Checkbox checked={task.isDone} 
+                      onChange={onCheckTask} />
+            <EditMode changeValue={changeSpan} 
+                      title={task.title} />
             <IconButton onClick={btnRemoveTask}>
               <Delete />
             </IconButton>
@@ -83,8 +78,7 @@ export const Todolist = (props:PropsType) => {
         <Button variant={props.filter === "all" ? "contained" : "text"}
           onClick={btnAll}
         >
-          {" "}
-          All{" "}
+          All
         </Button>
         <Button variant={props.filter==="active" ? "contained": "text"}
           onClick={btnActive}
@@ -92,11 +86,19 @@ export const Todolist = (props:PropsType) => {
           Active
         </Button>
         <Button variant={props.filter==="completed" ? "contained": "text"}
-          onClick={btnCompleted}
+                onClick={btnCompleted}
         >
           Completed
         </Button>
       </div>
+        <Button size={'large'}
+                style={{marginTop:'15px',marginLeft:'40px'}}
+                color={'secondary'}
+                onClick={removeTodo} 
+                variant={'contained'}
+                startIcon={<Delete />}>
+          Remove
+        </Button>
     </div>
   );
 };

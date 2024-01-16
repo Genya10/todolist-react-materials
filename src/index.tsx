@@ -11,6 +11,10 @@ import {store} from './state/store'
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-root.render(<AppRedux />);
+root.render(
+<Provider store={store}>
+  <AppRedux />
+</Provider>
+);
 
 reportWebVitals();

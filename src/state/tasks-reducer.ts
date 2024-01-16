@@ -33,7 +33,29 @@ type ActionsTypeTask = AddTaskActionType | RemoveTaskActionType |
     [todoId:string]:TaskType[];
  }
 
-export const tasksReducer=(state:TaskStateType,action:ActionsTypeTask):TaskStateType=>{
+export const todolist1=v1();
+export const todolist2=v1();
+export const todolist3=v1();
+
+const initialState:TaskStateType = {
+    [todolist1]:[
+      { id: v1(), title: "Vacuum", isDone: true },
+      { id: v1(), title: "Cook", isDone: false },
+      { id: v1(), title: "Vacuum", isDone: true },
+    ],
+    [todolist2]:[
+      { id: v1(), title: "Meat", isDone: false },
+      { id: v1(), title: "Bread", isDone: false },
+      { id: v1(), title: "Cupcake", isDone: true },
+    ],
+    [todolist3]:[
+      { id: v1(), title: "English", isDone: false },
+      { id: v1(), title: "React", isDone: true},
+      { id: v1(), title: "Typescript", isDone: true },
+    ]
+  }
+
+export const tasksReducer=(state:TaskStateType = initialState,action:ActionsTypeTask):TaskStateType=>{
    switch(action.type){
     case 'ADD_TASK':{
        const stateCopy={...state};

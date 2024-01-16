@@ -47,7 +47,7 @@ export const todolistsReducer=(state:Array<TodolistType>,action:ActionsType):Arr
           }
           return [...state]
         default:
-           throw new Error("I don't undestand")
+           return state;
   }
 }
 

@@ -23,7 +23,7 @@ type ChangeSpanActionType={
    type:'CHANGE_SPAN_TITLE',
    taskId:string,
    newValue:string,
-   todoId:string
+   todoId:string,
 }
 
 type ActionsTypeTask = AddTaskActionType | RemoveTaskActionType |
@@ -83,11 +83,8 @@ export const tasksReducer=(state:TaskStateType = initialState,action:ActionsType
     }      
     case 'CHANGE_SPAN_TITLE':{
         const stateCopy ={...state}
-        let tasks =stateCopy[action.taskId];
-        let task = tasks.find(t=> t.id === action.taskId);
-        if(task){
-            task.title = action.newValue;
-        }
+        let tasks =stateCopy[action.todoId];
+        stateCopy[action.todoId] = tasks.map(t => t.id === action.taskId ? {...t, title:action.newValue}: t)
         return stateCopy;
     }        
     case 'ADD_TODOLIST':{

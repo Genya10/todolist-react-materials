@@ -1,11 +1,10 @@
-import { FilterType } from "./App";
-import { ChangeEvent } from "react";
+import { FilterType } from "./AppRedux";
+import React,{ ChangeEvent } from "react";
 import { AddTaskInput } from "./AddTaskInput";
 import { EditMode } from "./Edit";
-import { IconButton } from "@mui/material";
+import { IconButton,Checkbox } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import Button from "@mui/material/Button";
-import {Checkbox} from "@mui/material";
 import { useDispatch,useSelector } from "react-redux";
 import { AppRootState } from "./state/store";
 import { checkTaskAC,removeTaskAC,changeSpanTitleAC,addTaskAC } from "./state/tasks-reducer";
@@ -29,21 +28,17 @@ export const Todolist = (props:PropsType) => {
   const tasks = useSelector<AppRootState,Array<TaskType>>(state => state.tasks[props.id]);
   const dispatch = useDispatch();
 
-  const changeSpanTitle=(taskId:string,newValue:string,todoId:string)=>{
-  const action = changeSpanTitleAC(taskId,newValue,todoId);
-  dispatch(action);
-  }
+  const btnAll=()=>{props.changeFilter('all',props.id) }; console.log("All");  
+  const btnActive=()=>props.changeFilter('active',props.id);console.log("Active");
+  const btnCompleted=()=>props.changeFilter('completed',props.id);console.log("Completed");
 
-  const btnAll=()=>{props.changeFilter('all',props.id) };   
-  const btnActive=()=>props.changeFilter('active',props.id);
-  const btnCompleted=()=>props.changeFilter('completed',props.id);
   const removeTodo=()=>{props.removeTodolist(props.id)};
-
-   const changeTitle=(newValue:string)=>{
-     props.changeMainTitle(newValue,props.id)
+  const changeTitle=(newValue:string)=>{
+     props.changeMainTitle(props.id,newValue)
    }
 
-   let filterForTask = tasks;
+  let allTodolistTasks = tasks;
+   let filterForTask = allTodolistTasks;
             if (props.filter === "completed") {
               filterForTask = filterForTask.filter((t) => t.isDone === true);
             }
@@ -87,12 +82,12 @@ export const Todolist = (props:PropsType) => {
 
       <div>
         <Button variant={props.filter === "all" ? "contained" : "text"}
-          onClick={btnAll}
+            onClick={btnAll}
         >
           All
         </Button>
         <Button variant={props.filter==="active" ? "contained": "text"}
-          onClick={btnActive}
+            onClick={btnActive}
         >
           Active
         </Button>

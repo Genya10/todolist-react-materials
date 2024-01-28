@@ -1,8 +1,6 @@
 import { v1 } from "uuid";
-import { TodolistType,FilterType  } from "../App";
-import { todolist1 } from "./tasks-reducer";
-import { todolist2 } from "./tasks-reducer";
-import { todolist3 } from "./tasks-reducer";
+import { TodolistType,FilterType  } from "../AppRedux";
+
 
 export type RemoveTodolistActionType={
   type:'REMOVE_TODOLIST',
@@ -26,10 +24,14 @@ export type ChangeTodolistFilterActionType={
 type ActionsType = RemoveTodolistActionType | AddTodolistActionType |
 ChangeTodolistTitleActionType | ChangeTodolistFilterActionType;
 
+export const todolist1=v1();
+export const todolist2=v1();
+export const todolist3=v1()
+
 const initialState:Array<TodolistType> = [
-  {id:todolist1,title:"Chores",filter:"all",},
+  /*{id:todolist1,title:"Chores",filter:"all",},
   {id:todolist2,title:"Purchases",filter:"all",},
-  {id:todolist3,title:"Study",filter:"all",},
+  {id:todolist3,title:"Study",filter:"all",},*/
 ]
 
 export const todolistsReducer=(state:Array<TodolistType>=initialState ,action:ActionsType):Array<TodolistType>=>{

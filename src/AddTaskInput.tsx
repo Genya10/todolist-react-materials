@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { ChangeEvent,KeyboardEvent } from "react";
-import { IconButton } from "@mui/material";
-import {TextField} from "@mui/material";
+import { useState,ChangeEvent,KeyboardEvent } from "react";
+import { IconButton,TextField } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 type PropsTypeInput={
@@ -9,6 +7,7 @@ type PropsTypeInput={
   }
   
  export const AddTaskInput =(props:PropsTypeInput)=>{
+  console.log("AddTaskInput is called")
     let [newTaskTitle,setTaskTitle] = useState('');
     let [error,setError] = useState('');
   

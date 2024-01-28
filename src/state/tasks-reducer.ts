@@ -1,17 +1,18 @@
-import { FilterType } from './../App';
 import { TaskType } from '../Todolist';
+import { TaskStateType } from '../AppRedux';
 import { v1 } from 'uuid';
 import { AddTodolistActionType,RemoveTodolistActionType } from './todolists-reducer';
+import { todolist1,todolist2,todolist3 } from './todolists-reducer';
 
-type AddTaskActionType={
-   type:'ADD_TASK',
-   value:string,
-   id:string
-}
 type RemoveTaskActionType={
     type:'REMOVE_TASK',
     id:string,
     todoId:string
+}
+type AddTaskActionType={
+   type:'ADD_TASK',
+   value:string,
+   id:string
 }
 type CheckTaskActionType={
     type:'CHECK_TASK',
@@ -26,19 +27,15 @@ type ChangeSpanActionType={
    todoId:string,
 }
 
-type ActionsTypeTask = AddTaskActionType | RemoveTaskActionType |
+type ActionsTypeTask =  RemoveTaskActionType |AddTaskActionType |
  CheckTaskActionType | ChangeSpanActionType | AddTodolistActionType | RemoveTodolistActionType;
 
- type TaskStateType ={
+ /*type TaskStateType ={
     [todoId:string]:TaskType[];
- }
-
-export const todolist1=v1();
-export const todolist2=v1();
-export const todolist3=v1();
+ }*/
 
 const initialState:TaskStateType = {
-    [todolist1]:[
+    /*[todolist1]:[
       { id: v1(), title: "Vacuum", isDone: true },
       { id: v1(), title: "Cook", isDone: false },
       { id: v1(), title: "Vacuum", isDone: true },
@@ -52,7 +49,7 @@ const initialState:TaskStateType = {
       { id: v1(), title: "English", isDone: false },
       { id: v1(), title: "React", isDone: true},
       { id: v1(), title: "Typescript", isDone: true },
-    ]
+    ]*/
   }
 
 export const tasksReducer=(state:TaskStateType = initialState,action:ActionsTypeTask):TaskStateType=>{

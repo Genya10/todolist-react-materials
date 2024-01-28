@@ -1,7 +1,6 @@
 import { v1 } from "uuid";
 import { TodolistType,FilterType  } from "../AppRedux";
 
-
 export type RemoveTodolistActionType={
   type:'REMOVE_TODOLIST',
   id:string
@@ -29,9 +28,9 @@ export const todolist2=v1();
 export const todolist3=v1()
 
 const initialState:Array<TodolistType> = [
-  /*{id:todolist1,title:"Chores",filter:"all",},
+  {id:todolist1,title:"Chores",filter:"all",},
   {id:todolist2,title:"Purchases",filter:"all",},
-  {id:todolist3,title:"Study",filter:"all",},*/
+  {id:todolist3,title:"Study",filter:"all",}
 ]
 
 export const todolistsReducer=(state:Array<TodolistType>=initialState ,action:ActionsType):Array<TodolistType>=>{

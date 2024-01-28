@@ -28,13 +28,13 @@ type PropsTypeInput={
     return(
       <div>  
         <TextField style={{marginBottom:'10px'}}
-          variant={"standard"}
-          label={"enter value"}
-          value={newTaskTitle}
-          onChange={inputOnChange}
-          onKeyDown={inputOnKeyDown}
-          error={!!error}        
-          helperText={error}  
+                  variant={"standard"}
+                  label={"enter value"}
+                  value={newTaskTitle}
+                  onChange={inputOnChange}
+                  onKeyDown={inputOnKeyDown}
+                  error={!!error}        
+                  helperText={error}  
         />
         <IconButton color={'success'}
                     onClick={setAddTask}>

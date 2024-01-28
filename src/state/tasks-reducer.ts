@@ -1,4 +1,3 @@
-import { TaskType } from '../Todolist';
 import { TaskStateType } from '../AppRedux';
 import { v1 } from 'uuid';
 import { AddTodolistActionType,RemoveTodolistActionType } from './todolists-reducer';
@@ -30,12 +29,8 @@ type ChangeSpanActionType={
 type ActionsTypeTask =  RemoveTaskActionType |AddTaskActionType |
  CheckTaskActionType | ChangeSpanActionType | AddTodolistActionType | RemoveTodolistActionType;
 
- /*type TaskStateType ={
-    [todoId:string]:TaskType[];
- }*/
-
 const initialState:TaskStateType = {
-    /*[todolist1]:[
+    [todolist1]:[
       { id: v1(), title: "Vacuum", isDone: true },
       { id: v1(), title: "Cook", isDone: false },
       { id: v1(), title: "Vacuum", isDone: true },
@@ -49,7 +44,7 @@ const initialState:TaskStateType = {
       { id: v1(), title: "English", isDone: false },
       { id: v1(), title: "React", isDone: true},
       { id: v1(), title: "Typescript", isDone: true },
-    ]*/
+    ]
   }
 
 export const tasksReducer=(state:TaskStateType = initialState,action:ActionsTypeTask):TaskStateType=>{

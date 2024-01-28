@@ -22,7 +22,7 @@ export type TaskStateType ={[key:string]:Array<TaskType>}
 function AppRedux() {
   const dispatch = useDispatch();
   const todoLists = useSelector<AppRootState,Array<TodolistType>>(state => state.todoList);
- // const tasks = useSelector<AppRootState, TaskStateType>(state => state.tasks)
+  const tasks = useSelector<AppRootState, TaskStateType>(state => state.tasks)
 
   const changeFilter = (value: FilterType,todoId:string) => {
   dispatch(changeTodolistFilterAC(value,todoId));

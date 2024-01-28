@@ -20,7 +20,7 @@ export type TaskType = {
     title:string,
     changeFilter:(value:FilterType,todoId:string)=>void,
     filter:FilterType ,
-    removeTodolist:(gRtDoiT:string)=>void,
+    removeTodolist:(todoId:string)=>void,
     changeMainTitle:(newValue:string,todoId:string)=>void,
 }
 
@@ -28,7 +28,7 @@ export const Todolist = (props:PropsType) => {
   const tasks = useSelector<AppRootState,Array<TaskType>>(state => state.tasks[props.id]);
   const dispatch = useDispatch();
 
-  const btnAll=()=>{props.changeFilter('all',props.id) }; console.log("All");  
+  const btnAll=()=>props.changeFilter('all',props.id) ; console.log("All");  
   const btnActive=()=>props.changeFilter('active',props.id);console.log("Active");
   const btnCompleted=()=>props.changeFilter('completed',props.id);console.log("Completed");
 
@@ -37,15 +37,15 @@ export const Todolist = (props:PropsType) => {
      props.changeMainTitle(props.id,newValue)
    }
 
-  let allTodolistTasks = tasks;
+   let allTodolistTasks = tasks;
    let filterForTask = allTodolistTasks;
-            if (props.filter === "completed") {
-              filterForTask = filterForTask.filter((t) => t.isDone === true);
-            }
             if (props.filter === "active") {
-              filterForTask = filterForTask.filter((t) => t.isDone === false);
+              filterForTask = allTodolistTasks.filter((t) => t.isDone === false);
             }
-
+            if (props.filter === "completed") {
+              filterForTask = allTodolistTasks.filter((t) => t.isDone === true);
+            }
+  
   return (
     <div>
       <h2 style={{textAlign:'center'}}>
@@ -55,23 +55,25 @@ export const Todolist = (props:PropsType) => {
       <AddTaskInput addItem={(value)=>{
         dispatch(addTaskAC(value,props.id))}} />
 
-      {filterForTask.map((task) => {
+      {filterForTask.map(task => {
         const btnRemoveTask = () => {
           dispatch(removeTaskAC(task.id, props.id));
         };
         const onCheckTask = (e: ChangeEvent<HTMLInputElement>) => {
           let newIsDoneValue = e.currentTarget.checked;
-          dispatch(checkTaskAC(task.id, e.currentTarget.checked, props.id));
+          dispatch(checkTaskAC(task.id, newIsDoneValue, props.id));
         };
         const changeSpan = (newValue: string) => {
           dispatch(changeSpanTitleAC(task.id, newValue, props.id))
         };
 
         return (
-          <div key={task.id}>
-            <Checkbox checked={task.isDone} 
+          <div key={task.id} className={task.isDone ? "is-done":""}>
+            <Checkbox 
+                     checked={task.isDone} 
                       onChange={onCheckTask} />
-            <EditMode changeValue={changeSpan} 
+            <EditMode 
+                      changeValue={changeSpan} 
                       title={task.title} />
             <IconButton onClick={btnRemoveTask}>
               <Delete />
@@ -81,17 +83,20 @@ export const Todolist = (props:PropsType) => {
       })}
 
       <div>
-        <Button variant={props.filter === "all" ? "contained" : "text"}
-            onClick={btnAll}
+        <Button 
+             variant={props.filter === "all" ? "contained" : "text"}
+             onClick={btnAll}
         >
           All
         </Button>
-        <Button variant={props.filter==="active" ? "contained": "text"}
-            onClick={btnActive}
+        <Button 
+              variant={props.filter==="active" ? "contained": "text"}
+              onClick={btnActive}
         >
           Active
         </Button>
-        <Button variant={props.filter==="completed" ? "contained": "text"}
+        <Button 
+               variant={props.filter==="completed" ? "contained": "text"}
                 onClick={btnCompleted}
         >
           Completed
